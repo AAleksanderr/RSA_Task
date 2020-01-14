@@ -104,6 +104,7 @@ namespace WebParseService
         {
             var option = new ChromeOptions();
             option.AddArgument("--start-maximized");
+            option.AddArgument("--blink-settings=imagesEnabled=false");
             var driver = new ChromeDriver(Environment.CurrentDirectory, option)
                 { Url = ParsePreferences.DriverUrl };
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(ParsePreferences.ParseRequestTimeout);
