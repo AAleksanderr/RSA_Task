@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CreateExcelDocumentService;
 using EmailSenderService;
+using MockParser;
 using NLog;
 using Preferences;
 using Preferences.Interfaces;
@@ -16,7 +17,14 @@ namespace RSAOnlinerParser
 
         private static void Main(string[] args)
         {
-            if (args.Length > 0) ParsePreferences.DriverUrl = args[0];
+            if (args.Length > 0 && !IsEmailChecker.IsEmail(args[0]))
+            {
+                AppLogger.Info("Invalid email address.");
+                AppLogger.Error("Invalid email address.");
+                return;
+            }
+
+            if (args.Length > 0) EmailSenderPreferences.EmailAddress = args[0];
 
             var items = GetSoughtItems(new WebParser());
 
